@@ -34,6 +34,9 @@ case $1 in
     SQL)
         $MYSQL_CONN -e 'show slave status\G' | grep 'Slave_SQL_Running' | grep -c 'Yes'
         ;;
+    LAG)
+        $MYSQL_CONN -e 'show slave status\G' | grep 'Seconds_Behind_Master' | awk -F: '{print $2}'
+        ;;
     *)
         echo "Usage:$0 (IO|SQL)"
         ;;
