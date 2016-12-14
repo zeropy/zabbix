@@ -35,10 +35,10 @@ case $1 in
         $MYSQL_CONN -e 'show slave status\G' | grep 'Slave_SQL_Running' | grep -c 'Yes'
         ;;
     LAG)
-        $MYSQL_CONN -e 'show slave status\G' | grep 'Seconds_Behind_Master' | awk -F: '{print $2}'
+	awk -F's' '{print $1}' /tmp/pt-heartbeat
         ;;
     *)
-        echo "Usage:$0 (IO|SQL)"
+        echo "Usage:$0 (IO|SQL|LAG)"
         ;;
 esac
 
